@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&family=Quicksand&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  /* fonts */
+  --font-nunito: 'Nunito', sans-serif;
+  --font-quicksand: 'Quicksand', sans-serif;
+  /* color */
+  --clr-site: #6d81fe;
+  --clr-sec: #0e3146;
+  --clr-txt: #0e3146;
+  --clr-grey: #8697a3;
+  --clr-white: #ffffff;
+  --clr-off-white: #eaf1ff;
+  --accent-info: #6d81fe;
+  --accent-success: #42c3a7;
+  --accent-warning: #f0ec8b;
+  --accent-danger: #ff9575;
+  --accent-info-lite: rgb(109 128 254 / 0.37);
+  --accent-success-lite: rgb(66 195 167 / 0.37);
+  --accent-warning-lite: rgb(240 237 139 / 0.37);
+  --accent-danger-lite: rgb(255 149 117 / 0.37);
+}
+
+html, body {
+  font-family: var(--font-nunito);
+  line-height: 1.7;
+  background-color: var(--clr-off-white);
+  color: var(--clr-sec);
+}
+
+.title {
+  font-family: var(--font-quicksand);
+  text-transform: capitalize;
+  letter-spacing: 1px;
+}
+
+.center-text {
+  text-align: center;
+}
+.two-grid-container, .two-grid-container-rwd {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1em;
+}
+
+/* ====== INPUT FIELDS ====== */
+.input-field {
+  padding: 0.5em;
+  line-height: 1.1;
+}
+
+.input-field label {
+  display: block;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+  color: var(--clr-sec);
+}
+
+.input-field input, 
+.input-field select, 
+.input-field textarea {
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  border: 2px solid var(--clr-off-white);
+  border-image: none;
+  border-radius: 3px;
+  padding: 16px 10px;
+  width: 100%;
+  font-family: var(--font-nunito);
+  font-size: 15px;
+  transition: border-color 0.5s ease;
+}
+
+.input-field input[type=password] {
+  letter-spacing: 1.5px;
+}
+
+.input-field input::placeholder, 
+.input-field select::placeholder, 
+.input-field textarea::placeholder {
+  text-transform: capitalize;
+}
+
+.input-field input:focus, 
+.input-field select:focus, 
+.input-field textarea:focus {
+  border-color: var(--clr-site);
+}
+
+@keyframes clickBtn {
+  from {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 600px) {
+  .two-grid-container {
+    gap: 0.4em;
+  }
+  .two-grid-container-rwd {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .input-field {
+    padding: 0.5em 0;
+  }
+}
