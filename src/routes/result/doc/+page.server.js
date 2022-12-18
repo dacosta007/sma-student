@@ -6,7 +6,8 @@ export async function load({ url }) {
   const studt = url.searchParams.get('doc')
   const term = url.searchParams.get('term')
   const session = url.searchParams.get('session')
-  const report = url.searchParams.get('report')
+  // type of report type(midTerm or exam)
+  const reportType = url.searchParams.get('report')
   
   try {
     let query = { "meta.studtId": studt }
@@ -14,11 +15,11 @@ export async function load({ url }) {
     let result = await results.findOne(query, opt)
     // console.log(result)
     
-    // console.log({ studt, term, session, report })
+    // console.log({ studt, term, session, reportType })
     return {
       docId: studt,
       result,
-      reportFor: { studt, term, session, report }
+      reportFor: { studt, term, session, reportType }
     }
   } catch (err) {
     console.log(`Error Result Page: ${err}`)

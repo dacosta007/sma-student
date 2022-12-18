@@ -24,7 +24,7 @@ export async function load() {
 export const actions = {
   report: async ({ request }) => {
     const frm = await request.formData()
-    let studtId = frm.get('studtId')
+    let studtId = (frm.get('studtId')).trim() // trim any white spaces
     let session = frm.get('session')
     let term = frm.get('term')
     let reportType = frm.get('reportType')

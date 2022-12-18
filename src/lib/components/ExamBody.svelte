@@ -5,17 +5,16 @@
   // console.log(report)
   // console.log($BranchInfoStore)
   // console.log(`Report for: ${reportFor.reportType}`)
-  // report = report.find(ele => ele.meta.studtId === docId)
 
-  let { meta, midTerm, cummulative } = report
+  let { meta, exam, cummulative } = report
   // let { term } = reportFor
 
   let term = reportFor.term
   // (reportFor.report === 'midTerm') ? console.log('show report for mid-term') : console.log('Report for exam');
-  let results = midTerm.report[`${term}`]
-  let tComment = midTerm.comments[`${term}`].teacher
-  let pComment = midTerm.comments[`${term}`].principal
-  let cummInfo = cummulative.midTerm[`${term}`]
+  let results = exam.report[`${term}`]
+  let tComment = exam.comments[`${term}`].teacher
+  let pComment = exam.comments[`${term}`].principal
+  let cummInfo = cummulative.exam[`${term}`]
   let { obtainable, obtained, totalSubj, percentage } = cummInfo
 
   function printSlip() {
@@ -23,7 +22,6 @@
     window.print()
   }
 </script>
-
 
 <!-- basic student info -->
 <!-- student's name -->
@@ -64,8 +62,8 @@
     </div>
     <!-- date -->
     <div class="std-info">
-      <span class="info-title">data</span>
-      <span class="info">{meta.createdAt}</span>
+      <span class="info-title">date</span>
+      <span class="info">{meta.updatedAt}</span>
     </div>
   </div>
 </section>
@@ -77,8 +75,8 @@
       <header class="rept-analysis">
         <div>subjects</div>
         <div>obtainable</div>
-        <div><span>1</span><sup>st</sup> <span>CA</span></div>
-        <div><span>2</span><sup>nd</sup> <span>CA</span></div>
+        <div><span>CA</span><span>(30)</span></div>
+        <div><span>Exam</span><span>(70)</span></div>
         <div>total</div>
         <div>grade</div>
       </header>
@@ -88,11 +86,11 @@
           <div>{result.subj}</div>
           <!-- obtainable -->
           <div>{result.obtainable}</div>
-          <!-- 1st CA -->
-          <div>{result.firstCA}</div>
-          <!-- 2nd CA -->
-          <div>{result.secondCA}</div>
-          <!-- total -->
+          <!-- CA score -->
+          <div>{result.CA}</div>
+          <!-- exam score -->
+          <div>{result.exam}</div>
+          <!-- total marks -->
           <div>{result.totalMark}</div>
           <!-- remarks(grade) -->
           <div style="color: {result.gradeClr};">{result.grade}</div>
