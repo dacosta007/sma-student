@@ -6,7 +6,7 @@ export async function load({ url }) {
   const studt = url.searchParams.get('doc')
   const term = url.searchParams.get('term')
   const session = url.searchParams.get('session')
-  // type of report type(midTerm or exam)
+  // type of report(midTerm or exam)
   const reportType = url.searchParams.get('report')
   
   try {

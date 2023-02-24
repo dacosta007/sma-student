@@ -36,15 +36,26 @@
     // run before form submission
     btnProps.disableBtn = true
     btnProps.showLoading = true
-
+    
+    let reptTerm = form.term.value
+    let reptType = form.reportType.value
     // run after form submission
     return async ({ result, update }) => {
       if (result.type === 'success' && result.data.success === true) {
         // console.log(result)
         ResultStore.set(result.data.data)
-        // console.log($ResultStore)
+        
+        // enable back, the submit button
         btnProps.showLoading = false
         btnProps.disableBtn = false
+
+        // check if the report is already added before redirecting
+        if (result.data.data[`${reptType}`].report[`${reptTerm}`] === undefined) {
+          alert(`🚨 Your "${reptType === 'midTerm' ? 'Mid-Term': 'Exam'}" for "${reptTerm} term" is yet to be uploaded/ready!`)
+          return
+        }
+
+        // redirect user to report page
         location.href = result.data.goto
         return
       }
@@ -96,6 +107,8 @@
             <label for="term">term</label>
             <select name="term" id="term" required>
               <option value={$BranchInfoStore.academicYear.currentTerm}>{$BranchInfoStore.academicYear.currentTerm}</option>
+              <option value="first">first</option>
+              <!-- <option value="third">third</option> -->
             </select>
           </div>
         </div>
