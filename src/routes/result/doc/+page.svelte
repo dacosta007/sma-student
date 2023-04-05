@@ -1,10 +1,17 @@
 <script>
+  import { BranchInfoStore } from "$lib/stores/BranchInfoStore"
+
   import ResultSlip from "$lib/components/ResultSlip.svelte"
   import ExamSlip from "$lib/components/ExamSlip.svelte"
+  import ReportNotice from "$lib/components/ReportNotice.svelte"
 
   export let data
 
-  // console.log(data)
+  const { academicYear } = $BranchInfoStore
+  
+  let { session:currentSession, currentTerm } = academicYear
+
+  // console.log(`current session: ${currentSession}`, `current term: ${currentTerm}`)
 </script>
 
 <svelte:head>
@@ -20,6 +27,11 @@
 
   <!-- Examination report sheet -->
   {#if data.reportFor.reportType === 'exam'}
-    <ExamSlip reportData={data.result} reportFor={data.reportFor} />
+    <!-- report for the current term within the session -->
+    {#if data.reportFor.term === currentTerm && data.reportFor.session === currentSession}
+      <ReportNotice examType={'exam'} studtInfo={data.result} />
+    {:else}
+      <ExamSlip reportData={data.result} reportFor={data.reportFor} />
+    {/if}
   {/if}
 </article>
