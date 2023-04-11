@@ -4,6 +4,7 @@
   import ResultSlip from "$lib/components/ResultSlip.svelte"
   import ExamSlip from "$lib/components/ExamSlip.svelte"
   import ReportNotice from "$lib/components/ReportNotice.svelte"
+  import NoPayment from "$lib/components/NoPayment.svelte"
 
   export let data
 
@@ -20,17 +21,17 @@
 </svelte:head>
 
 <article>
-  <!-- Mid-Term report sheet -->
-  {#if data.reportFor.reportType === 'midTerm'}
-    <ResultSlip reportData={data.result} reportFor={data.reportFor} />
-  {/if}
+  <!-- check for payment for the term in the session  -->
+  {#if data.pay === null}
+    <NoPayment stdName={data.stdName} reptInfo={data.reportFor} />
+  {:else}
+    <!-- Mid-Term report sheet -->
+    {#if data.reportFor.reportType === 'midTerm'}
+      <ResultSlip reportData={data.result} reportFor={data.reportFor} />
+    {/if}
 
-  <!-- Examination report sheet -->
-  {#if data.reportFor.reportType === 'exam'}
-    <!-- report for the current term within the session -->
-    {#if data.reportFor.term === currentTerm && data.reportFor.session === currentSession}
-      <ReportNotice examType={'exam'} studtInfo={data.result} />
-    {:else}
+    <!-- Examination report sheet -->
+    {#if data.reportFor.reportType === 'exam'}
       <ExamSlip reportData={data.result} reportFor={data.reportFor} />
     {/if}
   {/if}
