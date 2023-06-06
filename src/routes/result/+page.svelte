@@ -107,6 +107,7 @@
             <label for="term">term</label>
             <select name="term" id="term" required>
               <option value={$BranchInfoStore.academicYear.currentTerm}>{$BranchInfoStore.academicYear.currentTerm}</option>
+              <option value="second">second</option>
               <option value="first">first</option>
               <!-- <option value="third">third</option> -->
             </select>
