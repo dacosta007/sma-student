@@ -1,108 +1,131 @@
 <script>
-  import { BranchInfoStore } from "$lib/stores/BranchInfoStore"
+  import Card from "$lib/shared/Card.svelte"
 
-  export let data
-
-  // info about the sch branch
-  BranchInfoStore.set(data.branchInfo)
-  // console.log($BranchInfoStore)
+  const someJsonCode = `{
+    "error": {
+      "errors": [
+      {
+        "domain": "global",
+        "reason": "invalidParameter",
+        "message": "Invalid string value: 'asdf'. Allowed values: [mostpopular]",
+        "locationType": "parameter",
+        "location": "chart"
+      }
+      ],
+      "code": 400,
+      "message": "Invalid string value: 'asdf'. Allowed values: [mostpopular]"
+    }
+  }`;
 </script>
 
 <svelte:head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AFSS Ibadan Student Portal</title>
+  <title>Internal Server Error 🚧 🚩</title>
 </svelte:head>
 
 <section class="home-page">
-  <article class="action-sec">
-    <header class="sch-logo-sec">
-      <div class="sch-logo">
-        <img src="imgs/AFSSLogo.png" alt="AFSS school logo" width="130" height="auto">
-      </div>
+  <div class="info-container">
+    <Card>
+      <header class="header-sec">
+        <div class="img-container">
+          <img src="imgs/scheduled-maintenance-message_1.png" alt="maintenance_img" width="250" height="auto">
+        </div>
+        <h2 class="title">500 Internal server error</h2>
+      </header>
+  
+      <section class="msg-container">
+        <p>
+          Sorry, something went wrong. Please contact your engineering team or webmaster to trouble shot with the code below:
+        </p>
+  
+        <div class="server-code-err">
+          <code>
+            $2a$04$H4EvhNdqqjcxb4FsE/NAKOZljtLHioFMer9qkDTV9BjjO31qH8xpW-
+            $2a$04$yeGXoFAjezsfPNg.JAV/s.Npi0XJoLiN.315QyK8j8o6bNdizaTeW-
+            $2a$04$OS4pA.hNf8GB/VYO4NuZdeA2U7J5zKiTj.exhUCrzTlX5F1t5eGyu.
+            $2a$04$DQXV1tak6VqPOyyKaJDlg.Jit7isK1uGD7zBOQtRFOyupotCn4a3O
+          </code>
+    
+          <pre>{someJsonCode}</pre>
+        </div>
+  
+        <p>some list of causes:</p>
+  
+        <ul>
+          <li>System Zero downtime Maintenance</li>
+          <li>Server Deprecated Resources</li>
+          <li>Some DB Clusters Deficit</li>
+          <li>APIs Bad Request</li>
+        </ul>
 
-      <h2>Student Portal</h2>
-    </header>
-
-    <section class="content">
-      <p class="description">
-        welcome to AFSS, Ibadan school's student portal. Here, you can check your child's exam, and mid-term 
-        report records for the session. Click the button below to begin
-      </p>
-
-      <div class="cta-sec">
-        <a href="/result" class="cta-btn">check result</a> 
-      </div>
-    </section>
-  </article>
-
-  <footer class="copyright-sec">
-    <small>Copyright &copy;2022. AFSS Ibadan<sup>&trade;</sup> All rights Reserved</small>
-  </footer>
+        <div class="msg-strong">Please contact support.</div>
+      </section>
+    </Card>
+  </div>
 </section>
 
 <style>
   .home-page {
     width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    height: 100dvh;
+    max-height: 100%;
+    overflow: auto;
+    display: grid;
+    place-items: center;
     background-color: var(--clr-sec);
-    color: var(--clr-off-white);
-    padding: 2em 0;
+    padding: 2em 1em;
   }
-  .action-sec {
-    padding-top: 4em;
+  .info-container {
+    width: clamp(350px, 70%, 700px);
   }
-  .sch-logo-sec {
-    margin-bottom: 2.5em;
+  .header-sec {
+    padding: 0.8em 1.4em;
     text-align: center;
   }
-  .content {
-    width: 355px;
+  .img-container {
+    position: relative;
   }
-  .description {
-    font-size: 15px;
-    margin-bottom: 1em;
-  }
-  .description::first-letter {
-    text-transform: capitalize;
-  }
-  .cta-btn {
-    display: inline-block;
-    text-decoration: none;
-    text-align: center;
-    letter-spacing: 1px;
-    text-transform: capitalize;
-    font-size: 16px;
-    font-family: var(--font-quicksand);
-    background-color: var(--clr-off-white);
-    color: var(--clr-sec);
-    padding: 10px 12px;
-    border-radius: 21px;
+  .img-container img {
     width: 100%;
-    appearance: none;
-    outline: none;
-    transition: background-color 0.5s ease;
+    height: auto;
   }
-  .cta-btn:hover {
-    background-color: #dce1ec;
+  .header-sec h2 {
+    margin-top: -2em;
   }
-  .cta-btn:active {
-    animation: clickBtn 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  .msg-container {
+    padding: 0em 1.4em;
   }
-
+  .msg-container p {
+    font-size: 14px;
+  }
+  .server-code-err {
+    background-color: var(--clr-sec);
+    color: silver;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    overflow: auto;
+  }
+  ul {
+    font-size: 13px;
+    list-style-type: disc;
+    padding-left: 15px;
+  }
+  .msg-strong {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 1em 0em;
+  }
   @media (max-width: 600px) {
-    .sch-logo-sec {
-      margin-bottom: 2em;
+    .home-page {
+      display: block;
     }
-    .content {
+    .info-container {
+      overflow: hidden;
+      margin-top: 0;
       width: 100%;
-      padding: 0 1.2em;
     }
-    .description {
-      margin-bottom: 1.5em;
+    .header-sec h2 {
+      margin-top: -1.5em;
     }
   }
 </style>
