@@ -20,6 +20,50 @@
     disableBtn: true
   }
 
+  const { currentTerm, session:currentSession } = $BranchInfoStore.academicYear
+  let listOfTerms = [], listOfSessions = []
+
+  /* help create list options for terms to select by user */
+  if (currentTerm || currentTerm != undefined) {
+    switch (currentTerm) {
+      case 'first':
+        listOfTerms = ['first', 'second', 'third']
+      break;
+
+      case 'second':
+        listOfTerms = ['second', 'first', 'third']
+      break;
+
+      case 'third':
+        listOfTerms = ['third', 'second', 'first']
+      break;
+    
+      default:
+        listOfTerms = ['first', 'second', 'third']
+      break;
+    }
+  }
+
+  /* help create list options for session to select by user */
+  if (currentSession || currentSession != undefined) {
+    for (let i = 0; i < 3; i++) {
+      let str1, str2, sessionStr
+
+      if (listOfSessions.length === 0) {
+        str1 = parseInt(currentSession.split('/')[0])
+        str2 = parseInt(currentSession.split('/')[1])
+        sessionStr = `${str1 + 1}/${str2 + 1}`
+        listOfSessions.push(sessionStr)
+      }
+      if (listOfSessions.length > 0) {
+        str1 = parseInt((listOfSessions[i]).split('/')[0])
+        str2 = parseInt((listOfSessions[i]).split('/')[1])
+        sessionStr = `${str1 + 1}/${str2 + 1}`
+        listOfSessions.push(sessionStr)
+      }
+    }
+  }
+
   let error, success
 
   function checkField(event) {
@@ -41,6 +85,20 @@
     let reptType = form.reportType.value
     // run after form submission
     return async ({ result, update }) => {
+      if (result.type === 'invalid' || result.data.error) {
+        alert(`🚨 Your "${reptType === 'midTerm' ? 'Mid-Term': 'Exam'}" for "${reptTerm} term" is yet to be uploaded/ready!`)
+        btnProps.disableBtn = false
+        btnProps.showLoading = false
+        return
+      }
+      
+      if (result.data.success === true && result.data.data === null) {
+        alert(`🚨 Your "${reptType === 'midTerm' ? 'Mid-Term': 'Exam'}" for "${reptTerm} term" is yet to be uploaded/ready!`)
+        btnProps.disableBtn = false
+        btnProps.showLoading = false
+        return
+      }
+
       if (result.type === 'success' && result.data.success === true) {
         // console.log(result)
         ResultStore.set(result.data.data)
@@ -57,10 +115,9 @@
 
         // redirect user to report page
         location.href = result.data.goto
-        return
       }
-      // not successful message
-      console.log(result)
+
+      // on unsuccessful message enable submit btn back & remove loading state on btn 
       btnProps.disableBtn = false
       btnProps.showLoading = false
     }
@@ -99,17 +156,20 @@
           <div class="input-field">
             <label for="session">session</label>
             <select name="session" id="session" required>
-              <option value={$BranchInfoStore.academicYear.session}>{$BranchInfoStore.academicYear.session}</option>
+              <option value="2022/2023">2022/2023</option>
+              <option value={currentSession}>{currentSession}</option>
+              {#each listOfSessions as sess}
+                <option value="{sess}">{sess}</option>
+              {/each}
             </select>
           </div>
           
           <div class="input-field">
             <label for="term">term</label>
             <select name="term" id="term" required>
-              <option value={$BranchInfoStore.academicYear.currentTerm}>{$BranchInfoStore.academicYear.currentTerm}</option>
-              <option value="second">second</option>
-              <option value="first">first</option>
-              <!-- <option value="third">third</option> -->
+              {#each listOfTerms as term}
+                <option value="{term}">{term}</option>
+              {/each}
             </select>
           </div>
         </div>

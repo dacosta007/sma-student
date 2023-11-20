@@ -17,29 +17,26 @@ export async function load() {
     console.log(`Result page Error: ${err}`)
     return {}
   }
-  return {};
 };
 
 
 export const actions = {
   report: async ({ request }) => {
-    const frm = await request.formData()
-    let studtId = (frm.get('studtId')).trim() // trim any white spaces
-    let session = frm.get('session')
-    let term = frm.get('term')
-    let reportType = frm.get('reportType')
+    const frm = Object.fromEntries(await request.formData())
+    let { studtId, session, term, reportType } = frm
 
-    let objData = {studtId, session, term, reportType }
+
+    studtId = studtId.trim() // trim white spaces
 
     try {
       // get result db
-      let query = { 'meta.studtId': objData.studtId }
+      let query = { 'meta.studtId': studtId, 'meta.session': session }
       let opt = { projection: { _id: 0 } }
       let result = await results.findOne(query, opt)
       
       // if not found
-      if (result === undefined) {
-        return invalid(400, { error: 'No Such record can be found for this student'})
+      if (result === undefined || result === null) {
+        return invalid(400, { error: true, msg: 'No Such record can be found for this student'})
       }
   
       return {
